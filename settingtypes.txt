@@ -1,0 +1,10 @@
+# Whether PvP is enabled by default.
+# WARNING: Toggling this value would inverse the meaning of "PvP Area"!
+areas_pvp.pvp_default (PvP Default) bool false
+
+# Whether area owners are allowed to toggle PvP in their own areas.
+areas_pvp.self_toggle (Toggle PvP by area owners) bool false
+
+# Privileges needed to toggle PvP on other's areas, and 
+# (if areas_pvp.self_toggle = false) for oneself
+areas_pvp.toggle_privs (PvP Area Admin privileges) string areas
