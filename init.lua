@@ -74,11 +74,20 @@ In Area | Default | Allow?
   false |  true   | true
 ]]
 
-core.register_on_punchplayer(function(player, hitter)
-    if not (hitter and hitter:is_player()) then return end
+local function get_hitter_name(object)
+    if object:is_player() then
+        return object:get_player_name()
+    end
+    local luaentity = object:get_luaentity()
+    if core.global_exists("XBows") and XBows.registered_entities[luaentity.name] then
+        return luaentity._user and luaentity._user:get_player_name() or nil
+    end
+end
 
+core.register_on_punchplayer(function(player, hitter)
+    local hitter_name = get_hitter_name(hitter)
+    if not hitter_name then return end
     local player_name = player:get_player_name()
-    local hitter_name = hitter:get_player_name()
 
     -- Don't prevent "self-harming"
     if player_name == hitter_name then return end
@@ -122,7 +131,7 @@ core.register_chatcommand("areas_pvp", {
                 return false, S(name == area.owner
                     and NS("You're not allowed to toggle PvP on your areas (missing privileges: @1)")
                     or NS("You're not allowed to toggle PvP on other's areas (missing privileges: @1)"),
-                        table.concat(missing_privs, ", "))
+                    table.concat(missing_privs, ", "))
             end
         end
 

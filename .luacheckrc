@@ -20,6 +20,7 @@ read_globals = {
 
     "areas",
     "modlib",
+    "XBows",
 
     table = {
         fields = {
